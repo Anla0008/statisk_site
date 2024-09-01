@@ -4,18 +4,6 @@
   padding: 0;
 }
 
-.baggrund {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-image: url("watercolor-background-design/baggrund.webp");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  z-index: -1;
-}
-
 body {
   padding: 0;
   margin: 50px 50px;

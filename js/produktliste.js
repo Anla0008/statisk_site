@@ -3,23 +3,31 @@ fetch("https://kea-alt-del.dk/t7/api/products")
   .then(showProducts);
 
 function showProducts(products) {
-  // Looper og kalder showProducts
   products.forEach(showProduct);
 }
 
 function showProduct(product) {
-  console.log(product);
-  // fang template
+  //fanger template
   const template = document.querySelector("#smallProductTemplate").content;
-  // lav en kopi
-  const copy = template.cloneNode(true);
-  // ændre indhold
-  copy.querySelector("h3").textContent = product.productdisplayname;
+  //lav en kopi
+  const kopi = template.cloneNode(true);
+  const imgurl = `https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp`;
+  kopi.querySelector("img").src = imgurl;
+  kopi.querySelector("img").alt = product.productdisplayname;
+  kopi.querySelector("h3").textContent = product.productdisplayname;
+  kopi.querySelector(".subtle").textContent = product.usagetype;
+  kopi.querySelector(".price span").textContent = product.price;
+  kopi.querySelector("a").href += product.id;
+
   if (product.soldout) {
-    // produktet er udsolgt
-    copy.querySelector("article").classList.add("soldOut");
+    kopi.querySelector("article").classList.add("soldOut");
   }
-  copy.querySelector(".read-more").setAttribute("href", `produkt.html?id=${product.id}`);
-  // append
-  document.querySelector("main").appendChild(copy);
+
+  if (product.discount) {
+    kopi.querySelector("article").classList.add("onSale");
+    kopi.querySelector(".discounted p span").textContent = Math.round(product.price - (product.price * product.discount) / 100);
+    kopi.querySelector(".discounted p+p span").textContent = product.discount;
+  }
+  //produktet er udsolgt
+  document.querySelector("main").appendChild(kopi);
 }
